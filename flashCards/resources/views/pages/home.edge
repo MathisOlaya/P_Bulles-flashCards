@@ -1,5 +1,12 @@
 @component('components/layout', {title: 'Accueil'})
-  <p>
-    Main
-  </p>
+  <h2>
+    Mes decks
+  </h2>
+  @if(deckCount === 0)
+    {
+    <p>
+      Aucune collections pour le moment
+    </p>
+    }
+  @endif
 @endcomponent

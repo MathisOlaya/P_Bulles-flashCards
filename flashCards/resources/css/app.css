@@ -1,10 +1,49 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto';
 }
 
 html,
 body {
   height: 100%;
   width: 100%;
+}
+
+/*############################################## [ HEADER ] ##############################################*/
+header {
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  margin: 1rem;
+}
+
+/* PARTIE DE GAUCHE */
+.left-side,
+.right-side {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+}
+.left-side a {
+  width: 20%;
+  height: auto;
+}
+.left-side a img {
+  width: 100%;
+  height: auto;
+}
+.left-side p {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* PARTIE DE DROITE */
+.right-side p {
+  font-size: 1rem;
+}
+.right-side button {
+  border: none;
+  width: 10rem;
+  height: 2.5rem;
 }
