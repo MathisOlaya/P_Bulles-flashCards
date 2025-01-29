@@ -5,7 +5,8 @@ import Deck from '#models/deck'
 
 export default class DecksController {
   async index({ view }: HttpContext) {
-    const deckCount = await Deck.query().count
+    const decks = await Deck.query();
+    const deckCount = decks.length
 
     return view.render('pages/home', { deckCount })
   }
