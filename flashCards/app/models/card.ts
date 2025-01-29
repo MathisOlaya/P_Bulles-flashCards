@@ -1,20 +1,23 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import Deck from './deck.js'
 
-export default class User extends BaseModel {
+export default class Card extends BaseModel {
   // Table associée
-  public static table = 't_user'
+  public static table = 't_card'
 
   // Colonnes autorisées pour l'assignation de masse
   @column({ isPrimary: true })
-  public id_user: number
+  public id_card: number
 
   @column()
-  public username: string
+  public question: string
 
   @column()
-  public password_hash: string
+  public reponse: string
+
+  @column()
+  public id_deck: number
 
   @column.dateTime({ autoCreate: true })
   public created_at: DateTime
@@ -23,6 +26,6 @@ export default class User extends BaseModel {
   public updated_at: DateTime
 
   // Relation avec le modèle Deck
-  @hasMany(() => Deck)
-  public decks: HasMany<typeof Deck>
+  @belongsTo(() => Deck)
+  public deck: BelongsTo<typeof Deck>
 }
