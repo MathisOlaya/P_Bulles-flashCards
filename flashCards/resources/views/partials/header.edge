@@ -5,10 +5,12 @@
       QuizConst
     </p>
   </div>
-  <div class="right-side">
-    <p>
-      afficher_nom_d_utilisateur
-    </p>
-    <button>Se déconnecter</button>
-  </div>
+  @if(isAuthenticated)
+    <div class="right-side">
+      <p style="display:flex">
+        {{ auth.user.username }} ({{ auth.user.isAdmin ? 'Admin' : 'User'}})
+      </p>
+      <button>Se déconnecter</button>
+    </div>
+  @endif
 </header>
