@@ -16,8 +16,9 @@ import { middleware } from './kernel.js'
 
 //routes
 //[Authentification]
-router.get('/', [AuthController, 'index']).as('auth.show')
-router.post('/login', [AuthController, 'login']).as('auth.login')
+router.on('/').render('pages/home').use(middleware.auth())
+router.get('/login', [AuthController, 'index']).as('auth.show').use(middleware.guest())
+router.post('/login', [AuthController, 'login']).as('auth.login').use(middleware.guest())
 
 //[Home page]
 router.get('/home', [DecksController, 'index']).as('home').use(middleware.auth())
