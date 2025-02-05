@@ -1,8 +1,16 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import Deck from './deck.js'
+import { compose } from '@adonisjs/core/helpers'
+import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import hash from '@adonisjs/core/services/hash'
 
-export default class User extends BaseModel {
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
+  uids: ['username'],
+  passwordColumnName: 'password_hash',
+})
+
+export default class User extends compose(BaseModel, AuthFinder) {
   // Table associée
   public static table = 't_user'
 
@@ -15,6 +23,9 @@ export default class User extends BaseModel {
 
   @column()
   public password_hash: string
+
+  @column()
+  public isAdmin: boolean
 
   @column.dateTime({ autoCreate: true })
   public created_at: DateTime
