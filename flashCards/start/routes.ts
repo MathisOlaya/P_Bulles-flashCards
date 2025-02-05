@@ -15,10 +15,13 @@ import AuthController from '#controllers/auth_controller'
 import { middleware } from './kernel.js'
 
 //routes
-//[Authentification]
 router.on('/').render('pages/home').use(middleware.auth())
-router.get('/login', [AuthController, 'index']).as('auth.show').use(middleware.guest())
-router.post('/login', [AuthController, 'login']).as('auth.login').use(middleware.guest())
+
+//[Authentification]
+router.get('/login', [AuthController, 'index']).as('auth.show').use(middleware.guest()) //Show form
+router.post('/login', [AuthController, 'login']).as('auth.login').use(middleware.guest()) //Treat from
+
+router.get('/logout', [AuthController, 'logout']).as('auth.logout').use(middleware.auth())
 
 //[Home page]
 router.get('/home', [DecksController, 'index']).as('home').use(middleware.auth())
