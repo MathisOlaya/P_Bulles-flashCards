@@ -4,9 +4,9 @@
   </h2>
   <form action="{{ route('auth.login') }}" method="POST">
     {{ csrfField() }}
-    <input type="text" name="username" id="username" />
-    <input type="text" name="password" id="password" />
+    <input type="text" name="username" id="username" required />
+    <input type="text" name="password" id="password" required />
     <button type="submit">Se connecter</button>
-    <a href="/redirectToRegister">Créer un compte</a>
+    <a href="{{ route('auth.register.show') }}">Créer un compte</a>
   </form>
 @endcomponent
