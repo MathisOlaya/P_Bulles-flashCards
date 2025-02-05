@@ -7,4 +7,10 @@ import User from '#models/user'
 import { loginUserValidator } from '#validators/auth'
 
 export default class AuthController {
+  async index({ view, response, auth }: HttpContext) {
+    if (await auth.check()) {
+      return response.redirect().toRoute('home')
+    }
+    return view.render('pages/auth/login')
+  }
 }
