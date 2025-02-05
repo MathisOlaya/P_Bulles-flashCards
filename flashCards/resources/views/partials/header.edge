@@ -10,7 +10,7 @@
       <p style="display:flex">
         {{ auth.user.username }} ({{ auth.user.isAdmin ? 'Admin' : 'User'}})
       </p>
-      <button>Se déconnecter</button>
+      <a href="{{ route('auth.logout') }}">Se déconnecter</a>
     </div>
   @endif
 </header>
