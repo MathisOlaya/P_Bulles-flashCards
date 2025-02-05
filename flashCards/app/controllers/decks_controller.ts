@@ -4,8 +4,9 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Deck from '#models/deck'
 
 export default class DecksController {
-  async index({ view }: HttpContext) {
-    const decks = await Deck.query();
+  async index({ view, auth }: HttpContext) {
+    //get how many decks he has
+    const decks = await Deck.query()
     const deckCount = decks.length
 
     return view.render('pages/home', { deckCount })
