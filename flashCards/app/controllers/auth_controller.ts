@@ -13,4 +13,13 @@ export default class AuthController {
     }
     return view.render('pages/auth/login')
   }
+  async login({ request, auth, session, response }: HttpContext) {
+    const { username, password } = await request.validateUsing(loginUserValidator)
+
+    const user = await User.verifyCredentials(username, password)
+
+    await auth.use('web').login(user)
+
+    return response.redirect().toRoute('home')
+  }
 }
