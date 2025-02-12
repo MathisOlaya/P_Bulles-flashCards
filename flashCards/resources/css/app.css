@@ -1,7 +1,9 @@
+/* Réinitialisation des marges et paddings */
 * {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
+  box-sizing: border-box; /* Assure que les paddings et marges ne dépassent pas la largeur des éléments */
 }
 
 html,
@@ -49,15 +51,104 @@ header {
 }
 
 /*############################################## [ MAIN ] ############################################## */
-.container{
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
 }
-.container h2{
+.container h2 {
+  font-size: 2rem;
   text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
-.createDeck{
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto; /* Centrer le formulaire */
+  padding: 0 1rem; /* Padding pour éviter que le bouton touche les bords */
+}
+
+form input {
+  margin-bottom: 1rem; /* Réduit l'espace entre l'input et le message d'erreur */
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+form input:focus {
+  border-color: rgb(27, 81, 196);
+  outline: none;
+}
+
+form a {
+  margin-top: 1rem;
+}
+
+/* Button */
+button {
+  padding: 1rem;
+  background-color: rgb(27, 81, 196);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  font-size: 1.1rem;
+  width: 100%; /* Toujours garantir que le bouton prend toute la largeur */
+  box-sizing: border-box; /* Pour s'assurer que le padding ne fait pas déborder */
+  margin: 0 auto; /* Centrer le bouton */
+  display: block; /* Assure que le bouton est un élément de type bloc */
+}
+
+/* Button disabled */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Effet de hover */
+button:hover:not(:disabled) {
+  transform: scale(1.05); /* Agrandissement au survol */
+  background-color: rgb(21, 69, 154); /* Changement de couleur au survol */
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* Pour éviter que le bouton dépasse lors du hover */
+button:hover {
+  overflow: hidden;
+}
+
+/* A link style */
+a {
+  text-align: center;
+  font-size: 1rem;
+  color: rgb(27, 81, 196);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Affichage du bouton en fonction des champs */
+button[style='display: none'] {
+  display: none;
+}
+
+/* Formulaire de création */
+.createDeck {
   color: white;
   text-decoration: none;
   padding: 1.5rem;
@@ -66,11 +157,19 @@ header {
   background-color: rgb(27, 81, 196);
   transition: transform 0.3s ease;
 }
-.createDeck:hover{
-  transform: scale(1.2)
+
+.createDeck:hover {
+  transform: scale(1.2);
 }
 
-.no-deck{
+.no-deck {
   padding-top: 2rem;
   text-align: center;
+}
+
+/* Erreurs */
+.text-danger {
+  color: red;
+  font-size: 0.9rem; /* Un peu plus petit que le texte normal */
+  margin-bottom: 0.75rem;
 }
