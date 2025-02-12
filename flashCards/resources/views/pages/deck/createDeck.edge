@@ -1,0 +1,12 @@
+@component('components/layout', {title: 'Création d\'un deck | QuizConst'})
+  <h2>
+    Créer un nouveau deck
+  </h2>
+  <form action="{{ route('deck.create') }}" method="POST">
+    {{ csrfField() }}
+    @!component('components/input' ,{name: 'name', label: 'Nom', value: old('name')})
+    @!component('components/textarea' ,{name: 'description', label: 'Description', value: old('description')})
+    <button type="submit">Créer</button>
+    <a href="{{ route('home') }}">Abandonner</a>
+  </form>
+@endcomponent
