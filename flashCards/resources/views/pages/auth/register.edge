@@ -5,8 +5,8 @@
   <form action="{{ route('auth.register') }}" method="POST">
     {{ csrfField() }}
     @!component('components/input', { name: 'username', label: 'Nom d\'utilisateur', value: old('username')})
-    @!component('components/input', { name: 'password', label: 'Mot de passe', value: old('password')})
-    @!component('components/input', { name: 'confirmPassword', label: 'Confirmer le mot de passe', value: old('confirmPassword')})
+    @!component('components/input', { type: 'password', name: 'pwd', label: 'Mot de passe', value: old('pwd')})
+    @!component('components/input', { type: 'password', name: 'confirmPassword', label: 'Confirmer le mot de passe', value: old('confirmPassword')})
     <button style="display: none" id="submitBtn" type="submit">Créer</button>
     <a href="{{ route('auth.login.show') }}">J'ai déjà un compte ? Se connecter</a>
   </form>
@@ -14,7 +14,7 @@
     // Récupérer les inputs
     const username = document.getElementById("username");
     
-    const password = document.getElementById("password");
+    const password = document.getElementById("pwd");
     
     const confirmPassword = document.getElementById("confirmPassword");
     

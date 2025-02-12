@@ -5,7 +5,7 @@
   <form action="{{ route('auth.login') }}" method="POST">
     {{ csrfField() }}
     @!component('components/input', { name: 'username', label: 'Nom d\'utilisateur', value: old('username')})
-    @!component('components/input', { name: 'password', label: 'Mot de passe', value: old('password')})
+    @!component('components/input', { name: 'pwd', label: 'Mot de passe', value: old('pwd')})
     <button type="submit">Se connecter</button>
     <a href="{{ route('auth.register.show') }}">Créer un compte</a>
   </form>
