@@ -5,7 +5,7 @@ import User from '#models/user'
 
 //Import Validator
 import { loginUserValidator } from '#validators/auth'
-import { registerUserValidator } from '#validators/register'
+import { registerUserValidator } from '#validators/auth'
 
 export default class AuthController {
   async logInIndex({ view, response, auth }: HttpContext) {
@@ -23,13 +23,22 @@ export default class AuthController {
 
     return response.redirect().toRoute('home')
   }
-  async register({ request }: HttpContext) {
+  async register({ request, auth, response }: HttpContext) {
     const { username, password, confirmPassword } =
       await request.validateUsing(registerUserValidator)
+
+    const user = await User.create({
+      username: username,
+      password_hash: password,
+    })
+
+    await auth.use('web').login(user)
+
+    return response.redirect().toRoute('home')
   }
   async logout({ response, auth }: HttpContext) {
     await auth.use('web').logout()
 
-    return response.redirect().toRoute('auth.show')
+    return response.redirect().toRoute('auth.login.show')
   }
 }
