@@ -7,5 +7,37 @@
       Aucune collections pour le moment
     </h4>
   @endif
-  <a href="/linkToCreationPage" class="createDeck">Créer un deck</a>
+  @if(deckCount >= 1)
+    <table>
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            Nom
+          </th>
+          <th>
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @each ((deck, index) in decks)
+          <tr onclick="window.location='{{ route('deck.show', { id: deck.id_deck }) }}'">
+            <td>
+              {{ index }}
+            </td>
+            <td>
+              {{ deck.nom }}
+            </td>
+            <td>
+              {{ deck.description }}
+            </td>
+          </tr>
+        @end
+      </tbody>
+    </table>
+  @endif
+  <a href="{{ route('deck.create.show') }}" class="createDeck">Créer un deck</a>
 @endcomponent
