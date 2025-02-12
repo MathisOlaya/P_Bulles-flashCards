@@ -4,20 +4,34 @@
   </h2>
   <form action="{{ route('auth.register') }}" method="POST">
     {{ csrfField() }}
-    <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" required />
-    <input type="password" name="password" id="password" placeholder="Mot de passe" required />
-    <input
-      type="password"
-      name="confirmPassword"
-      id="confirmPassword"
-      placeholder="Confirmer le mot de passe"
-      required
-    />
-    <button type="submit">Créer</button>
     @!component('components/input', { name: 'username', label: 'Nom d\'utilisateur', value: old('username')})
     @!component('components/input', { name: 'password', label: 'Mot de passe', value: old('password')})
     @!component('components/input', { name: 'confirmPassword', label: 'Confirmer le mot de passe', value: old('confirmPassword')})
     <button style="display: none" id="submitBtn" type="submit">Créer</button>
     <a href="{{ route('auth.login.show') }}">J'ai déjà un compte ? Se connecter</a>
   </form>
+  <script>
+    // Récupérer les inputs
+    const username = document.getElementById("username");
+    
+    const password = document.getElementById("password");
+    
+    const confirmPassword = document.getElementById("confirmPassword");
+    
+    const submitBtn = document.getElementById("submitBtn");
+    // Vérifier si tous les champs sont remplis
+    
+    function checkFields() {
+      if (username.value.trim().length > 0 && password.value.trim().length > 0 && confirmPassword.value.trim().length > 0) {
+        submitBtn.style.display = "inline"; // Afficher le bouton si tous les champs sont remplis
+      } else {
+        submitBtn.style.display = "none"; // Masquer le bouton si l'un des champs est vide
+      }
+    }
+    // Ajouter des écouteurs d'événements sur chaque input
+    
+    [ username, password, confirmPassword ].forEach(input => {
+      input.addEventListener("input", checkFields); // Écouter l'événement input pour chaque champ
+    });
+  </script>
 @endcomponent
