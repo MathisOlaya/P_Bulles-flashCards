@@ -18,7 +18,7 @@ import { middleware } from './kernel.js'
 router.on('/').render('pages/home').use(middleware.auth())
 
 //[Authentification]
-router.get('/login', [AuthController, 'logInIndex']).as('auth.show').use(middleware.guest()) //Show form login
+router.get('/login', [AuthController, 'logInIndex']).as('auth.login.show').use(middleware.guest()) //Show form login
 router.post('/login', [AuthController, 'login']).as('auth.login').use(middleware.guest()) //Treat from login
 
 router
