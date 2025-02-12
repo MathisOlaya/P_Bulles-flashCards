@@ -8,28 +8,21 @@ import { loginUserValidator } from '#validators/auth'
 import { registerUserValidator } from '#validators/auth'
 
 export default class AuthController {
-  async logInIndex({ view, response, auth }: HttpContext) {
-    return view.render('pages/auth/login')
-  }
-  async registerIndex({ view }: HttpContext) {
-    return view.render('pages/auth/register')
-  }
   async login({ request, auth, session, response }: HttpContext) {
-    const { username, password } = await request.validateUsing(loginUserValidator)
+    const { username, pwd } = await request.validateUsing(loginUserValidator)
 
-    const user = await User.verifyCredentials(username, password)
+    const user = await User.verifyCredentials(username, pwd)
 
     await auth.use('web').login(user)
 
     return response.redirect().toRoute('home')
   }
   async register({ request, auth, response }: HttpContext) {
-    const { username, password, confirmPassword } =
-      await request.validateUsing(registerUserValidator)
+    const { username, pwd, confirmPassword } = await request.validateUsing(registerUserValidator)
 
     const user = await User.create({
       username: username,
-      password_hash: password,
+      password_hash: pwd,
     })
 
     await auth.use('web').login(user)
