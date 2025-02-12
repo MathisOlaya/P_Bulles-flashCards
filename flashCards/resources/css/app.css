@@ -63,6 +63,17 @@ header {
   margin-bottom: 2rem;
   font-weight: 600;
 }
+table {
+  width: 55%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 1vw;
+  border-bottom: #ddd solid 1px;
+}
 
 /* Formulaire */
 form {
@@ -85,6 +96,21 @@ form input {
 
 form input:focus {
   border-color: rgb(27, 81, 196);
+  outline: none;
+}
+form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  min-height: 150px; /* Hauteur minimale pour textarea */
+  resize: vertical; /* Permet à l'utilisateur de redimensionner verticalement */
+  margin-bottom: 1rem; /* Espace sous le textarea */
+}
+
+form textarea:focus {
+  border-color: rgb(27, 81, 196); /* Changer la bordure au focus */
   outline: none;
 }
 
