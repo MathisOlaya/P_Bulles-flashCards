@@ -22,11 +22,13 @@ export default class DecksController {
     const user = await auth.getUserOrFail();
     const deckId = await request.param('id');
 
-    if(!await Deck.query().where('id_deck', deckId).andWhere('id_user', user.id_user).first()){
+    const deck = await Deck.query().where('id_deck', deckId).andWhere('id_user', user.id_user).first()
+
+    if(!deck){
       return view.render('pages/errors/not_found')
     }
-    
-    return view.render('pages/deck/showDeck')
+
+    return view.render('pages/deck/showDeck', { deck })
   }
   async create({ request, auth, response }: HttpContext) {
     const { name, description } = await request.validateUsing(createDeckValidator)
@@ -41,5 +43,8 @@ export default class DecksController {
     })
 
     return response.redirect().toRoute('home')
+  }
+  async delete({request}: HttpContext){
+    console.log("DELETE")
   }
 }
