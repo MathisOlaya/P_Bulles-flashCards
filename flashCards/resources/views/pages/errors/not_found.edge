@@ -1,8 +1,7 @@
-<h1>
-  404 - Page not found
-</h1>
-<p>
-  This template is rendered by the
-  <a href="http://docs.adonisjs.com/guides/exception-handling#status-pages">status pages feature</a>
-  of the global exception handler.
-</p>
+@component('components/layout', {title: 'Erreur 404 | QuizConst'})
+  <h1 style="color: red">
+    Erreur 404
+  </h1>
+  <p style="padding-top: 10px">Vous n'avez pas accès à cette resource</p>
+  <a style="padding-top: 10px" href="{{route('home')}}">Retour à l'accueil</a>
+@endcomponent
