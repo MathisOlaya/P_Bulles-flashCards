@@ -17,7 +17,15 @@ export default class DecksController {
 
     return view.render('pages/home', { decks, deckCount })
   }
-  async show({ view }: HttpContext) {
+  async show({ request, view, auth }: HttpContext) {
+    //check if the parameter's id is a deck of current user
+    const user = await auth.getUserOrFail();
+    const deckId = await request.param('id');
+
+    if(!await Deck.query().where('id_deck', deckId).andWhere('id_user', user.id_user).first()){
+      return view.render('pages/errors/not_found')
+    }
+    
     return view.render('pages/deck/showDeck')
   }
   async create({ request, auth, response }: HttpContext) {
