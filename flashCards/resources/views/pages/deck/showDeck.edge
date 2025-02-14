@@ -1,5 +1,28 @@
-@component('components/layout', {title: 'Consulter un deck'})
+@component('components/layout', {title: 'Consulter un deck | QuizConst'})
   <h2>
     Consulter un deck
   </h2>
+  <form id="form" action="{{route('deck.delete', {id: deck.id_deck}) }}?_method=DELETE" method="POST">
+    {{ csrfField() }}
+    <button id="deleteButton" type="button">Supprimer</button>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const button = document.getElementById('deleteButton');
+
+    button.addEventListener('click', () => {
+      Swal.fire({
+        title: 'Êtes-vous sûr?',
+        text: "Cette action ne peut pas être annulée",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, supprimez-le!',
+        cancelButtonText: 'Non, annulez!',
+      }).then((result) => {
+        if(result.isConfirmed){
+          document.getElementById('form').submit()
+        }
+      })
+    })
+  </script>
 @endcomponent
