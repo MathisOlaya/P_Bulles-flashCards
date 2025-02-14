@@ -44,7 +44,20 @@ export default class DecksController {
 
     return response.redirect().toRoute('home')
   }
-  async delete({request}: HttpContext){
-    console.log("DELETE")
+  async delete({request, view, auth, response}: HttpContext){
+    //id who will be delete
+    const id = request.param('id');
+    const user = await auth.getUserOrFail()
+
+    //On vérifie bien que ce soit un deck de l'utilisateur.
+    const deckToDelete = await Deck.query().where('id_deck', id).andWhere('id_user', user.id_user).first()
+
+    if(!deckToDelete){
+      return view.render('pages/errors/not_found')
+    }
+
+    deckToDelete.delete();
+
+    response.redirect().toRoute('home')
   }
 }
