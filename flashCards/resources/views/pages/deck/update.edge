@@ -2,5 +2,11 @@
 <h1>
     Modifier un deck
 </h1>
+<form action="{{route('deck.update', {id: deck.id_deck})}}?_method=PUT" method="POST">
+    {{ csrfField() }}
+    @!component('components/input', {name: 'name', label: 'Nom', value: deck.nom})
+    @!component('components/textarea', {name: 'description', label: 'Description', value: deck.description})
+    <button type="submit">Sauvegarder</button>
+</form>
 <a style="padding-top: 0.6rem" href="{{route('deck.show', {id: deck.id_deck})}}">Retour</a>
 @endcomponent
