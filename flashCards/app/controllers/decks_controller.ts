@@ -73,4 +73,19 @@ export default class DecksController {
     
     return view.render('pages/deck/update', { deck })
   }
+  async update({response, request}: HttpContext){
+    const { name, description } = await request.validateUsing(updateDeckValidator)
+
+    const id = request.param('id')
+
+    //update models
+    const deck = await Deck.findOrFail(id)
+
+    deck.merge({
+      nom: name,
+      description: description
+    }).save();
+
+    return response.redirect().toRoute('home')
+  }
 }
