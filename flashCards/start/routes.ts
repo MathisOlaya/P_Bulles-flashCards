@@ -50,4 +50,5 @@ router.get('/deck/:id/show', [DecksController, 'show']).as('deck.show').use(midd
 router.delete('/deck/:id/delete', [DecksController, 'delete']).as('deck.delete').use(middleware.auth())
 
 // Update deck
-router.on('/deck/:id/update').render('pages/deck/update').as('deck.update.show').use(middleware.auth())
+router.get('/deck/:id/update', [DecksController, 'showUpdate']).as('deck.update.show').use(middleware.auth())
+router.put('/deck/:id/update', [DecksController, 'update']).as('deck.update').use(middleware.auth())
