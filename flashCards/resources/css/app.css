@@ -193,6 +193,52 @@ button[style='display: none'] {
   text-align: center;
 }
 
+.updateContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto; /* Centrer le formulaire */
+  padding: 0 1rem; /* Padding pour éviter que le bouton touche les bords */
+}
+#updateDeck{
+  padding: 1rem;
+  background-color: white;
+  color: rgb(27, 81, 196);
+  border: 1px solid rgb(27, 81, 196);
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  font-size: 1.1rem;
+  max-width: 30rem;
+  width: 100%; /* Toujours garantir que le bouton prend toute la largeur */
+  box-sizing: border-box; /* Pour s'assurer que le padding ne fait pas déborder */
+  margin: 0 auto; /* Centrer le bouton */
+  margin-bottom: 0.6rem;
+  display: block; /* Assure que le bouton est un élément de type bloc */
+}
+#updateDeck:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Effet de hover */
+#updateDeck:hover:not(:disabled) {
+  transform: scale(1.05); /* Agrandissement au survol */
+  color: white;
+  background-color: rgb(21, 69, 154); /* Changement de couleur au survol */
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* Pour éviter que le bouton dépasse lors du hover */
+:hover {
+  overflow: hidden;
+}
+
 /* Erreurs */
 .text-danger {
   color: red;

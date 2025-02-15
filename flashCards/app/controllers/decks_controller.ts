@@ -27,7 +27,7 @@ export default class DecksController {
     if(!deck){
       return view.render('pages/errors/not_found')
     }
-
+    
     return view.render('pages/deck/showDeck', { deck })
   }
   async create({ request, auth, response }: HttpContext) {

@@ -2,6 +2,17 @@
   <h2>
     Consulter un deck
   </h2>
+  <form>
+    <label for="name">Nom</label>
+    <input id="name" value="{{deck.nom}}" readonly>
+    <label for="description">Description</label>
+    <textarea name="description" id="description" readonly>{{deck.description}}</textarea>
+    <label for="createdAt">Date de création</label>
+    <input id="createdAt" value="{{deck.created_at}}" readonly>
+  </form>
+  <div class="updateContainer">
+    <a id="updateDeck" href="{{route('deck.update.show', {id: deck.id_deck}) }}">Modifier</a>
+  </div>
   <form id="form" action="{{route('deck.delete', {id: deck.id_deck}) }}?_method=DELETE" method="POST">
     {{ csrfField() }}
     <button id="deleteButton" type="button">Supprimer</button>
