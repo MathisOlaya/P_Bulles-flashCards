@@ -4,7 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Deck from '#models/deck'
 
 // [Validator]
-import { createDeckValidator } from '#validators/deck'
+import { createDeckValidator, updateDeckValidator } from '#validators/deck'
 
 export default class DecksController {
   async index({ view, auth }: HttpContext) {
@@ -59,5 +59,18 @@ export default class DecksController {
     deckToDelete.delete();
 
     response.redirect().toRoute('home')
+  }
+  async showUpdate({view, auth, request}: HttpContext){
+    //check if the parameter's id is a deck of current user
+    const user = await auth.getUserOrFail();
+    const deckId = await request.param('id');
+
+    const deck = await Deck.query().where('id_deck', deckId).andWhere('id_user', user.id_user).first()
+
+    if(!deck){
+      return view.render('pages/errors/not_found')
+    }
+    
+    return view.render('pages/deck/update', { deck })
   }
 }
