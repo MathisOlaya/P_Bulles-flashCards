@@ -91,3 +91,8 @@ router
   .as('card.update.show')
   .use(middleware.auth())
 
+//Update card
+router
+  .put('/deck/:id/card/:cardId', [CardsController, 'updateCard'])
+  .as('card.update')
+  .use(middleware.auth())
