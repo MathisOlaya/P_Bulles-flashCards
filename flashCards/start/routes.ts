@@ -79,3 +79,9 @@ router
   .as('card.show')
   .use(middleware.auth())
 
+//Delete card
+router
+  .delete('/deck/:id/card/:cardId', [CardsController, 'deleteCard'])
+  .as('card.delete')
+  .use(middleware.auth())
+
