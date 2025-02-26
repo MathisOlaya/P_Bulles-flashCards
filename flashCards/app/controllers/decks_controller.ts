@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 // [Models]
 import Deck from '#models/deck'
+import Card from '#models/card'
 
 // [Validator]
 import { createDeckValidator, updateDeckValidator } from '#validators/deck'
@@ -27,35 +28,34 @@ export default class DecksController {
       .andWhere('id_user', user.id_user)
       .first()
 
-    //change date format
-    if (deck) {
-      const date = new Date(deck.created_at)
-      deck.created_at = date.toLocaleString('fr-FR', {
-        weekday: 'long', // Jour de la semaine complet
-        year: 'numeric', // Année en format numérique
-        month: 'long', // Mois complet
-        day: 'numeric', // Jour du mois
-        hour: 'numeric', // Heure
-        minute: 'numeric', // Minute
-        second: 'numeric', // Seconde
-        timeZoneName: 'short', // Indication du fuseau horaire
-      })
-    }
-
     if (!deck) {
       return view.render('pages/errors/not_found')
     }
 
-    return view.render('pages/deck/showDeck', { deck })
+    //change date format
+    const date = new Date(deck.created_at)
+    deck.created_at = date.toLocaleString('fr-FR', {
+      weekday: 'long', // Jour de la semaine complet
+      year: 'numeric', // Année en format numérique
+      month: 'long', // Mois complet
+      day: 'numeric', // Jour du mois
+      hour: 'numeric', // Heure
+      minute: 'numeric', // Minute
+      second: 'numeric', // Seconde
+      timeZoneName: 'short', // Indication du fuseau horaire
+    })
+
+    // Get all cards from deck
     const cards = await Card.query().where('id_deck', deckId)
 
     return view.render('pages/deck/showDeck', { deck, cards })
   }
   async create({ request, auth, response }: HttpContext) {
-    const { name, description } = await request.validateUsing(createDeckValidator)
-
     //get user
     const user = await auth.getUserOrFail()
+
+    //valide data
+    const { name, description } = await request.validateUsing(createDeckValidator(user.id_user))
 
     await Deck.create({
       nom: name,
@@ -80,7 +80,7 @@ export default class DecksController {
       return view.render('pages/errors/not_found')
     }
 
-    deckToDelete.delete()
+    await deckToDelete.delete()
 
     response.redirect().toRoute('home')
   }
@@ -100,13 +100,21 @@ export default class DecksController {
 
     return view.render('pages/deck/update', { deck })
   }
-  async update({ response, request }: HttpContext) {
-    const { name, description } = await request.validateUsing(updateDeckValidator)
+  async update({ view, response, request, auth }: HttpContext) {
+    const user = await auth.getUserOrFail()
 
-    const id = request.param('id')
+    const { name, description } = await request.validateUsing(updateDeckValidator(user.id_user))
 
-    //update models
-    const deck = await Deck.findOrFail(id)
+    const deckId = await request.param('id')
+
+    const deck = await Deck.query()
+      .where('id_deck', deckId)
+      .andWhere('id_user', user.id_user)
+      .first()
+
+    if (!deck) {
+      return view.render('pages/errors/not_found')
+    }
 
     deck
       .merge({
