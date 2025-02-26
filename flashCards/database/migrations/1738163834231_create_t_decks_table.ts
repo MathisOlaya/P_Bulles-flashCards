@@ -6,7 +6,7 @@ export default class TDeckSchema extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id_deck').notNullable() // Clé primaire
-      table.string('nom', 70).notNullable().unique() // Nom unique
+      table.string('nom', 70).notNullable() // Nom unique
       table.string('description', 254).notNullable() // Description
       table.integer('id_user').unsigned().notNullable() // Clé étrangère vers t_user
       table.foreign('id_user').references('t_user.id_user').onDelete('CASCADE')
