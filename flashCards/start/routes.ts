@@ -67,3 +67,9 @@ router
   .as('card.create.show')
   .use(middleware.auth())
 
+//Create card
+router
+  .post('/deck/:id/card/store', [CardsController, 'createCard'])
+  .as('card.create')
+  .use(middleware.auth())
+
