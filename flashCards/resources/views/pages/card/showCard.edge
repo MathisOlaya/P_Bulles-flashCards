@@ -1,0 +1,52 @@
+@component('components/layout', {title: 'Affichage d\'une carte | QuizConst'})
+  <h2>
+    Affichage d'une carte
+  </h2>
+  <div class="toggleCard">
+    <h3 id="toggleCardText">
+      {{ card.question }}
+    </h3>
+  </div>
+  <div class="updateContainer">
+    <a id="updateCard" href="{{ route('card.update.show', {id: deck.id_deck, cardId: card.id_card}) }}">Modifier</a>
+  </div>
+  <form
+    id="deleteForm"
+    action="{{ route('card.delete', {id: deck.id_deck, cardId: card.id_card}) }}?_method=DELETE"
+    method="POST"
+  >
+    {{ csrfField() }}
+    <button id="deleteCardButton" type="button">Supprimer</button>
+  </form>
+  <a style="padding-top: 1rem" href="{{ route('deck.show', {id: deck.id_deck}) }}">Retour</a>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    
+  </script>
+  <script>
+    const button = document.getElementById("deleteCardButton");
+    
+    button.addEventListener("click", () => {
+      Swal.fire({
+        title: "Êtes-vous sûr?",
+        text: "Cette action ne peut pas être annulée",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Oui, supprimez-la!",
+        cancelButtonText: "Non, annulez!"
+      }).then(result => {
+        if (result.isConfirmed) {
+          document.getElementById("deleteForm").submit();
+        }
+      });
+    });
+    
+    const toggleCardDiv = document.querySelector(".toggleCard"); // Utilisation de `querySelector` pour récupérer l'élément par classe
+    
+    const toggleCardText = document.getElementById("toggleCardText");
+    
+    toggleCardDiv.addEventListener("click", () => {
+      toggleCardText.innerHTML = toggleCardText.innerHTML === `{{ card.question }}` ? `{{ card.reponse }}` : `{{ card.question }}`;
+    });
+  </script>
+@endcomponent
+  

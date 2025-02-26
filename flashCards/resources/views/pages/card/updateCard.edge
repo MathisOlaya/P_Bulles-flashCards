@@ -1,0 +1,18 @@
+@component('components/layout', {title: 'Modifier une carte | Quizconst'})
+  <h2>
+    Modifier une carte
+  </h2>
+  <form
+    action="{{ route('card.update', {id: deck.id_deck, cardId: card.id_card}) }}?_method=PUT"
+    method="POST"
+  >
+    {{ csrfField() }}
+    @!component('components/input', {name: 'question', label: 'Question', value: card.question})
+    @!component('components/input', {name: 'reponse', label: 'Réponse', value: card.reponse})
+    <button type="submit">Sauvegarder</button>
+  </form>
+  <a
+    style="padding-top: 0.6rem"
+    href="{{ route('card.show', {id: deck.id_deck, cardId: card.id_card}) }}"
+  >Retour</a>
+@endcomponent

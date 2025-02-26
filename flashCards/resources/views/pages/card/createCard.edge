@@ -1,0 +1,12 @@
+@component('components/layout', {title: 'Créer une carte | QuizConst'})
+  <h2>
+    Création d'une carte pour le deck {{ deck.nom }}
+  </h2>
+  <form action="{{ route('card.create', {id: deck.id_deck}) }}" method="POST">
+    {{ csrfField() }}
+    @!component('components/input', {name: 'question', label: 'Question', value: old('question')})
+    @!component('components/input', {name: 'answer', label: 'Réponse', value: old('answer')})
+    <button type="submit">Créer</button>
+  </form>
+  <a href="{{ route('deck.show', {id: deck.id_deck}) }}">Abandonner</a>
+@endcomponent
