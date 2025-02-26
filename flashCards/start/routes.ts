@@ -85,3 +85,9 @@ router
   .as('card.delete')
   .use(middleware.auth())
 
+//Show update page
+router
+  .get('/deck/:id/card/:cardId/update', [CardsController, 'showUpdatePage'])
+  .as('card.update.show')
+  .use(middleware.auth())
+
