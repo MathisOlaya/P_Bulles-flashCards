@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         @each ((deck, index) in decks)
-          <tr onclick="window.location='{{ route('deck.show', { id: deck.id_deck }) }}'">
+          <tr class="clickableDeck" onclick="window.location='{{ route('deck.show', { id: deck.id_deck }) }}'">
             <td>
               {{ index }}
             </td>

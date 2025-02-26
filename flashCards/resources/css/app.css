@@ -201,7 +201,7 @@ button[style='display: none'] {
   margin: 0 auto; /* Centrer le formulaire */
   padding: 0 1rem; /* Padding pour éviter que le bouton touche les bords */
 }
-#updateDeck{
+#updateDeck {
   padding: 1rem;
   background-color: white;
   color: rgb(27, 81, 196);
@@ -237,6 +237,11 @@ button[style='display: none'] {
 /* Pour éviter que le bouton dépasse lors du hover */
 :hover {
   overflow: hidden;
+}
+
+.clickableDeck:hover {
+  background-color: rgb(232, 226, 226);
+  cursor: pointer;
 }
 
 /* Erreurs */
