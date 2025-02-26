@@ -60,3 +60,10 @@ router
   .as('deck.update.show')
   .use(middleware.auth())
 router.put('/deck/:id/update', [DecksController, 'update']).as('deck.update').use(middleware.auth())
+
+// Show creation card page
+router
+  .get('/deck/:id/card/store', [CardsController, 'showCreationPage'])
+  .as('card.create.show')
+  .use(middleware.auth())
+
