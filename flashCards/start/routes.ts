@@ -44,11 +44,17 @@ router
 router.post('/deck/create', [DecksController, 'create']).as('deck.create').use(middleware.auth())
 
 // Show deck's page
-router.get('/deck/:id/show', [DecksController, 'show']).as('deck.show').use(middleware.auth())
+router.get('/deck/:id', [DecksController, 'show']).as('deck.show').use(middleware.auth())
 
 //Delete deck
-router.delete('/deck/:id/delete', [DecksController, 'delete']).as('deck.delete').use(middleware.auth())
+router
+  .delete('/deck/:id/delete', [DecksController, 'delete'])
+  .as('deck.delete')
+  .use(middleware.auth())
 
 // Update deck
-router.get('/deck/:id/update', [DecksController, 'showUpdate']).as('deck.update.show').use(middleware.auth())
+router
+  .get('/deck/:id/update', [DecksController, 'showUpdate'])
+  .as('deck.update.show')
+  .use(middleware.auth())
 router.put('/deck/:id/update', [DecksController, 'update']).as('deck.update').use(middleware.auth())
