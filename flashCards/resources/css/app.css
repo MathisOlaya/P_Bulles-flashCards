@@ -201,6 +201,8 @@ button[style='display: none'] {
   margin: 0 auto; /* Centrer le formulaire */
   padding: 0 1rem; /* Padding pour éviter que le bouton touche les bords */
 }
+
+#updateCard,
 #updateDeck {
   padding: 1rem;
   background-color: white;
@@ -219,12 +221,14 @@ button[style='display: none'] {
   margin-bottom: 0.6rem;
   display: block; /* Assure que le bouton est un élément de type bloc */
 }
+#updateCard:disabled,
 #updateDeck:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
 /* Effet de hover */
+#updateCard:hover:not(:disabled),
 #updateDeck:hover:not(:disabled) {
   transform: scale(1.05); /* Agrandissement au survol */
   color: white;
@@ -249,4 +253,227 @@ button[style='display: none'] {
   color: red;
   font-size: 0.9rem; /* Un peu plus petit que le texte normal */
   margin-bottom: 0.75rem;
+}
+
+/*-----------------------------------------------SHOW DECK--------------------------------------*/
+/* Réinitialisation des marges et paddings */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+.showDeckContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* Espace entre les deux parties */
+}
+
+.leftPart,
+.rightPart {
+  flex: 1;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* LEFT PART */
+/* Formulaire */
+.leftPart {
+  width: 100%;
+}
+.leftPart form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.leftPart form input {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.leftPart form input:focus {
+  border-color: rgb(27, 81, 196);
+  outline: none;
+}
+
+.leftPart form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.leftPart form textarea:focus {
+  border-color: rgb(27, 81, 196);
+  outline: none;
+}
+
+/* Bouton */
+.leftPart button {
+  padding: 1rem;
+  background-color: rgb(27, 81, 196);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  font-size: 1.1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  display: block;
+}
+
+.leftPart button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.leftPart button:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: rgb(21, 69, 154);
+}
+
+/* Lien */
+.leftPart a {
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.leftPart a:hover {
+  text-decoration: underline;
+}
+
+/* Conteneur de mise à jour */
+.leftPart .updateContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.leftPart #updateDeck {
+  padding: 1rem;
+  background-color: white;
+  color: rgb(27, 81, 196);
+  border: 1px solid rgb(27, 81, 196);
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  font-size: 1.1rem;
+  max-width: 30rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 0.6rem auto;
+  display: block;
+}
+
+.leftPart #updateDeck:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.leftPart #updateDeck:hover:not(:disabled) {
+  transform: scale(1.05);
+  color: white;
+  background-color: rgb(21, 69, 154);
+}
+
+/* RIGHT PART */
+.rightPart {
+  flex: 1;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightPart table {
+  width: 100%;
+  max-width: 30rem;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.rightPart th,
+.rightPart td {
+  border: 1px solid #ccc;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.rightPart th {
+  background-color: #f0f0f0; /* Gris clair */
+  color: black;
+}
+
+.rightPart a {
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  background-color: rgb(27, 81, 196);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  font-size: 1.1rem;
+  width: 100%;
+  max-width: 30rem;
+}
+
+.rightPart a:hover {
+  transform: scale(1.05);
+  background-color: rgb(21, 69, 154);
+}
+
+/* CARD*/
+.toggleCard {
+  width: 100%;
+  max-width: 28rem;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+.toggleCard h3 {
+  font-weight: 400;
+}
+.toggleCard:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
