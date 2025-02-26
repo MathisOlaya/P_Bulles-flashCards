@@ -12,6 +12,8 @@ import router from '@adonisjs/core/services/router'
 //controller
 import DecksController from '#controllers/decks_controller'
 import AuthController from '#controllers/auth_controller'
+import CardsController from '#controllers/cards_controller'
+
 import { middleware } from './kernel.js'
 
 // [Routes] : Default
