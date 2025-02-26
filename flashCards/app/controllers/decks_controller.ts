@@ -47,6 +47,9 @@ export default class DecksController {
     }
 
     return view.render('pages/deck/showDeck', { deck })
+    const cards = await Card.query().where('id_deck', deckId)
+
+    return view.render('pages/deck/showDeck', { deck, cards })
   }
   async create({ request, auth, response }: HttpContext) {
     const { name, description } = await request.validateUsing(createDeckValidator)

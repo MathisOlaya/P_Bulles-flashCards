@@ -1,40 +1,80 @@
 @component('components/layout', {title: 'Consulter un deck | QuizConst'})
-  <h2>
-    Consulter un deck
-  </h2>
-  <form>
-    <label for="name">Nom</label>
-    <input id="name" value="{{deck.nom}}" readonly>
-    <label for="description">Description</label>
-    <textarea name="description" id="description" readonly>{{deck.description}}</textarea>
-    <label for="createdAt">Date de création</label>
-    <input id="createdAt" value="{{deck.created_at}}" readonly>
-  </form>
-  <div class="updateContainer">
-    <a id="updateDeck" href="{{route('deck.update.show', {id: deck.id_deck}) }}">Modifier</a>
-  </div>
-  <form id="form" action="{{route('deck.delete', {id: deck.id_deck}) }}?_method=DELETE" method="POST">
-    {{ csrfField() }}
+  <div class="showDeckContainer">
+    <div class="leftPart">
+      <h2>
+        Consulter un deck
+      </h2>
+      <form>
+        @!component('components/nonEditableInput', {name: 'name', label: 'Nom', value: deck.nom, })
+        @!component('components/nonEditableTextarea', {name: 'name', label: 'Description', value: deck.description, })
+        @!component('components/nonEditableInput', {name: 'createdAt', label: 'Date de création', value:deck.created_at })
+      </form>
+      <div class="updateContainer">
+        <a id="updateDeck" href="{{ route('deck.update.show', {id: deck.id_deck}) }}">Modifier</a>
+      </div>
+      <form id="form" action="{{ route('deck.delete', {id: deck.id_deck}) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
     <button id="deleteButton" type="button">Supprimer</button>
-  </form>
-  <a style="padding-top: 1rem" href="{{route('home')}}">Accueil</a>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    const button = document.getElementById('deleteButton');
+      </form>
+      <a style="padding-top: 1rem" href="{{ route('home') }}">Accueil</a>
+    </div>
+    <div class="rightPart">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Id
+            </th>
+            <th>
+              Recto
+            </th>
+            <th>
+              Verso
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @each((card, index) in cards)
+            <tr
+              class="clickableDeck"
+              onclick="window.location='{{ route('card.show', { id: deck.id_deck, cardId: card.id_card }) }}'"
+            >
+              <td>
+                {{ index }}
+              </td>
+              <td>
+                {{ card.question }}
+              </td>
+              <td>
+                {{ card.reponse }}
+              </td>
+            </tr>
+          @end
+        </tbody>
+      </table>
+      <a href="{{ route('card.create.show', {id: deck.id_deck}) }}">Ajouter une carte</a>
+    </div>
+  </div>
 
-    button.addEventListener('click', () => {
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    
+  </script>
+  <script>
+    const button = document.getElementById("deleteButton");
+    
+    button.addEventListener("click", () => {
       Swal.fire({
-        title: 'Êtes-vous sûr?',
+        title: "Êtes-vous sûr?",
         text: "Cette action ne peut pas être annulée",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Oui, supprimez-le!',
-        cancelButtonText: 'Non, annulez!',
-      }).then((result) => {
-        if(result.isConfirmed){
-          document.getElementById('form').submit()
+        confirmButtonText: "Oui, supprimez-le!",
+        cancelButtonText: "Non, annulez!"
+      }).then(result => {
+        if (result.isConfirmed) {
+          document.getElementById("form").submit();
         }
-      })
-    })
+      });
+    });
   </script>
 @endcomponent
