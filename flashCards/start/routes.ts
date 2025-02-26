@@ -73,3 +73,9 @@ router
   .as('card.create')
   .use(middleware.auth())
 
+//Show card
+router
+  .get('/deck/:id/card/:cardId', [CardsController, 'showCard'])
+  .as('card.show')
+  .use(middleware.auth())
+
