@@ -8,13 +8,20 @@ import Card from '#models/card'
 import { createDeckValidator, updateDeckValidator } from '#validators/deck'
 
 export default class DecksController {
-  async index({ view, auth }: HttpContext) {
+  async index({ view, auth, request }: HttpContext) {
+    // Get query parameter
+    const query = request.input('q');
+
     //get user
     const user = await auth.getUserOrFail()
 
     //get how many decks he has
-    const decks = await Deck.query().where('id_user', user.id_user)
+    let decks = await Deck.query().where('id_user', user.id_user)
     const deckCount = decks.length
+    // If user specify QUERY.
+    if(query){
+      decks = await Deck.query().where('id_user', user.id_user).andWhereILike('nom', `%${query}%`)
+    }
 
     return view.render('pages/home', { decks, deckCount })
   }

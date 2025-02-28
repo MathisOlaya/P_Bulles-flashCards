@@ -8,6 +8,9 @@
     </h4>
   @endif
   @if(deckCount >= 1)
+    <form action="{{route('home')}}" method="GET">
+      <input type="search" name="q" id="deckFilter" placeholder="Chercher un deck">
+    </form>
     <table>
       <thead>
         <tr>
