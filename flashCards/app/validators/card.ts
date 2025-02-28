@@ -23,15 +23,19 @@ const createCardValidator = (deckId) => {
 const updateCardValidator = (deckId) =>
   vine.compile(
     vine.object({
-      question: vine.string().unique(async (db, value, field) => {
-        const user = await db
-          .from('t_card')
-          .where('question', value)
-          .andWhereNot('id_card', field.parent.params.cardId)
-          .andWhere('id_deck', deckId)
-          .first()
-        return !user
-      }),
+      question: vine
+        .string()
+        .trim()
+        .minLength(10)
+        .unique(async (db, value, field) => {
+          const user = await db
+            .from('t_card')
+            .where('question', value)
+            .andWhereNot('id_card', field.parent.params.cardId)
+            .andWhere('id_deck', deckId)
+            .first()
+          return !user
+        }),
       reponse: vine.string().trim().minLength(1),
     })
   )
