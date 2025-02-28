@@ -25,7 +25,7 @@ export default class CardsController {
     return view.render('pages/card/createCard', { deck })
   }
 
-  async createCard({ view, request, auth, response }: HttpContext) {
+  async createCard({ view, request, auth, response, session }: HttpContext) {
     const user = await auth.getUserOrFail()
     const deckId = await request.param('id')
 
@@ -47,6 +47,8 @@ export default class CardsController {
       reponse: answer,
       id_deck: deckId,
     })
+
+    session.flash('success', 'Carte créée avec succès.')
 
     //Redirect to show deck
     return response.redirect().toRoute('deck.show', { id: deckId })

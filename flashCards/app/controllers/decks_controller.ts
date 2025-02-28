@@ -50,7 +50,7 @@ export default class DecksController {
 
     return view.render('pages/deck/showDeck', { deck, cards })
   }
-  async create({ request, auth, response }: HttpContext) {
+  async create({ request, auth, response, session }: HttpContext) {
     //get user
     const user = await auth.getUserOrFail()
 
@@ -62,6 +62,8 @@ export default class DecksController {
       description: description,
       id_user: user.id_user,
     })
+
+    session.flash('success', 'Deck crée avec succès')
 
     return response.redirect().toRoute('home')
   }

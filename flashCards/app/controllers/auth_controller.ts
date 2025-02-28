@@ -11,7 +11,17 @@ export default class AuthController {
   async login({ request, auth, session, response }: HttpContext) {
     const { username, pwd } = await request.validateUsing(loginUserValidator)
 
-    const user = await User.verifyCredentials(username, pwd)
+    let user
+
+    try {
+      user = await User.verifyCredentials(username, pwd)
+    } catch {
+      if (!user) {
+        // Si l'utilisateur n'existe pas ou que le mot de passe est incorrect
+        session.flash('error', 'Mot de passe incorrect.')
+        return response.redirect().toRoute('auth.login.show')
+      }
+    }
 
     await auth.use('web').login(user)
 
