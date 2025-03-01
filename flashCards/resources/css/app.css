@@ -539,3 +539,9 @@ body {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
+
+#playActions{
+  display: flex;
+  width: 15%;
+  gap: 10px;
+}
