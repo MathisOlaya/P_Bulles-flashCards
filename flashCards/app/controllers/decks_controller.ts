@@ -134,4 +134,23 @@ export default class DecksController {
 
     return response.redirect().toRoute('home')
   }
+
+  async play({ view, request, auth }: HttpContext){
+    const id = request.param('id');
+    const user = await auth.getUserOrFail();
+
+    const deck = await Deck.query()
+      .where('id_deck', id)
+      .andWhere('id_user', user.id_user)
+      .first()
+
+    if (!deck) {
+      return view.render('pages/errors/not_found')
+    }
+
+    const cards = await Card.query().where('id_deck', id)
+    console.log(JSON.parse(JSON.stringify(cards)))
+
+    return view.render('pages/game/game', {deck, cards: JSON.stringify(cards)})
+  }
 }
