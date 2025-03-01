@@ -2,11 +2,7 @@
   <h2>
     Affichage d'une carte
   </h2>
-  <div class="toggleCard">
-    <h3 id="toggleCardText">
-      {{ card.question }}
-    </h3>
-  </div>
+  @!component('components/card', { question: card.question, reponse: card.reponse })
   <div class="updateContainer">
     <a id="updateCard" href="{{ route('card.update.show', {id: deck.id_deck, cardId: card.id_card}) }}">Modifier</a>
   </div>
@@ -40,23 +36,7 @@
       });
     });
     
-    const toggleCardDiv = document.querySelector(".toggleCard");
     
-    const toggleCardText = document.getElementById("toggleCardText");
-    
-    const question = decodeHtml("{{ card.question }}"); // Injecte la question ici
-    
-    const reponse = decodeHtml("{{ card.reponse }}"); // Injecte la réponse ici
-    
-    toggleCardDiv.addEventListener("click", () => {
-      toggleCardText.innerHTML = toggleCardText.innerHTML === question ? reponse : question;
-    });
-    
-    function decodeHtml(html) {
-      const txt = document.createElement("textarea");
-      txt.innerHTML = html;
-      return txt.value;
-    }
   </script>
 @endcomponent
   
