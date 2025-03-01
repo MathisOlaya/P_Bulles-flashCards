@@ -9,6 +9,7 @@
   @endif
   @if(deckCount >= 1)
     <form action="{{route('home')}}" method="GET">
+      {{ csrfField() }}
       <input type="search" name="q" id="deckFilter" placeholder="Chercher un deck">
     </form>
     <table>
