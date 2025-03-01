@@ -1,0 +1,27 @@
+<div data-card class="toggleCard">
+    <h3 id="toggleCardText">
+      {{ question }}
+    </h3>
+  </div>
+
+<script> 
+    const toggleCardDiv = document.querySelector(".toggleCard");
+    
+    const toggleCardText = document.getElementById("toggleCardText");
+    
+    const question = decodeHtml("{{ question }}"); // Injecte la question ici
+    
+    const reponse = decodeHtml("{{ reponse }}"); // Injecte la réponse ici
+    
+    toggleCardDiv.addEventListener("click", () => {
+      toggleCardText.innerHTML = toggleCardText.innerHTML === question ? reponse : question;
+    });
+    
+    function decodeHtml(html) {
+      const txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
+    }
+
+
+</script>
