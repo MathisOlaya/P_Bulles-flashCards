@@ -239,11 +239,6 @@ button[style='display: none'] {
     background-color 0.3s ease;
 }
 
-/* Pour éviter que le bouton dépasse lors du hover */
-:hover {
-  overflow: hidden;
-}
-
 .clickableDeck:hover {
   background-color: rgb(232, 226, 226);
   cursor: pointer;
