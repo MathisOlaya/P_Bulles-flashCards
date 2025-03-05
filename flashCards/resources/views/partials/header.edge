@@ -1,9 +1,7 @@
 <header>
   <div class="left-side">
-    <a href="{{ route('home') }}">      <img src="/img/logo.png" alt="Logo représenté par des cartes" /></a>
-    <p>
-      QuizConst
-    </p>
+    <a id="headerImg" href="{{ route('home') }}">      <img src="/img/logo.png" alt="Logo représenté par des cartes" /></a>
+    <a id="headerTxt" href="{{ route('home') }}">QuizConst</a>
   </div>
   @if(isAuthenticated)
     <div class="right-side">
