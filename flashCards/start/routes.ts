@@ -39,7 +39,10 @@ router.get('/home', [DecksController, 'index']).as('home').use(middleware.auth()
 
 // [Deck]
 //play
-router.get('/deck/:id/play', [DecksController, 'play']).as('deck.play').use(middleware.auth())
+router
+  .get('/deck/:id/game', [DecksController, 'selectGame'])
+  .as('game.select')
+  .use(middleware.auth())
 
 router
   .on('/deck/create')
