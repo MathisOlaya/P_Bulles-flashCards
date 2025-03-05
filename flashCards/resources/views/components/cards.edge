@@ -12,48 +12,76 @@
   <button id="correct">Correct</button>
 </div>
 <script>
-    const cards = JSON.parse(decodeHtml('{{ cards }}'))
-
-    //Defaut INDEX 
-    let currentIndex = 0;
-
-    const toggleCardDiv = document.querySelector(".toggleCard");
-    
-    const toggleCardText = document.getElementById("toggleCardText");
-
-    const nextButton = document.getElementById('next')
-    const previousButton = document.getElementById('previous')
-    
-    toggleCardDiv.addEventListener("click", () => {
-        toggleCardText.innerHTML = toggleCardText.innerHTML === cards[currentIndex].question ? cards[currentIndex].reponse : cards[currentIndex].question;
-    });
-
-    nextButton.addEventListener('click', () => {
-      updateIndex(1)
-      toggleCardText.innerHTML = cards[currentIndex].question
-    })
-
-    previousButton.addEventListener('click', () => {
-      updateIndex(-1);
-      toggleCardText.innerHTML = cards[currentIndex].question
-    })
-
-    function updateIndex(mathOp){
-      if(currentIndex + mathOp <= cards.length - 1 && currentIndex + mathOp >= 0){
-        currentIndex += mathOp;
-      }
+  let cards = JSON.parse(decodeHtml("{{ cards }}"));
+  // Fonction pour décoder le HTML (que tu utilises déjà pour le JSON)
+  
+  function decodeHtml(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
+  // Décode les réponses après avoir récupéré les cartes
+  
+  cards.forEach(card => {
+    card.reponse = decodeURIComponent(card.reponse); // Décoder les réponses
+  });
+  // Continue ton code comme d'habitude...
+  
+  let wrongAnswers = [];
+  
+  let currentIndex = 0;
+  
+  const currentCardText = document.getElementById("currentCard");
+  
+  const countCardText = document.getElementById("cardCount");
+  
+  const toggleCardDiv = document.querySelector(".toggleCard");
+  
+  const toggleCardText = document.getElementById("toggleCardText");
+  
+  const correctButton = document.getElementById("correct");
+  
+  const wrongButton = document.getElementById("wrong");
+  
+  toggleCardDiv.addEventListener("click", () => {
+    toggleCardText.innerHTML = toggleCardText.innerHTML === cards[currentIndex].question ? cards[currentIndex].reponse : cards[currentIndex].question;
+  });
+  
+  correctButton.addEventListener("click", () => {
+    updateIndex(1);
+    toggleCardText.innerHTML = cards[currentIndex].question;
+  });
+  
+  wrongButton.addEventListener("click", () => {
+    wrongAnswers.push(cards[currentIndex]);
+    updateIndex(1);
+    toggleCardText.innerHTML = cards[currentIndex].question;
+  });
+  
+  function updateIndex(mathOp) {
+    if (currentIndex + mathOp <= cards.length - 1 && currentIndex + mathOp >= 0) {
+      currentCardText.innerHTML = currentIndex + mathOp + 1;
+      currentIndex += mathOp;
+    } else {
+      endGame();
     }
-    
-    function decodeHtml(html) {
-      const txt = document.createElement("textarea");
-      txt.innerHTML = html;
-      return txt.value;
+  }
+  
+  function endGame() {
+    if (wrongAnswers.length === 0) {
+      window.location.href = "{{route('game.victory', {id: deck.id_deck})}}";
     }
-
-    function showDefaultCard(){
-      toggleCardText.innerHTML = cards[0].question
-    }
-
-
+    cards = wrongAnswers;
+    wrongAnswers = [];
+    currentIndex = 0;
     showDefaultCard();
+  }
+  
+  function showDefaultCard() {
+    toggleCardText.innerHTML = cards[0].question;
+    currentCardText.innerHTML = currentIndex + 1;
+    countCardText.innerHTML = cards.length;
+  }
+  
+  showDefaultCard();
 </script>
