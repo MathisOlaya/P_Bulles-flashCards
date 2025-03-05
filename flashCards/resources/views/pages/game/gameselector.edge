@@ -1,0 +1,31 @@
+@component('components/layout', {title: 'Choix d\'un mode de jeu | QuizConst'})
+  <h2>
+    Jouer au deck : {{ deck.nom }}
+  </h2>
+  <form action="{{ route('game.play', {id: deck.id_deck}) }}" method="GET">
+    {{ csrfField() }}
+    <h4>
+      Excercer en mode
+    </h4>
+    <select name="gamemode" id="">
+      <option value="all">
+        Jusqu'au bout
+      </option>
+    </select>
+    @if(cardsCount > 0)
+      <button type="submit">Go !</button>
+    @else
+      <h4>
+        Vous n'avez pour l'instant aucune carte.
+      </h4>
+    @endif
+  </form>
+@endcomponent
+
+<style>
+  select {
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+  }
+</style>
