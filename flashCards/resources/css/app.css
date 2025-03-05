@@ -27,15 +27,15 @@ header {
   align-items: center;
   gap: 5%;
 }
-.left-side a {
+.left-side #headerImg {
   width: 20%;
   height: auto;
 }
-.left-side a img {
+.left-side #headerImg img {
   width: 100%;
   height: auto;
 }
-.left-side p {
+.left-side #headerTxt {
   font-size: 2rem;
   font-weight: 800;
 }
@@ -185,7 +185,8 @@ button[style='display: none'] {
 }
 
 .createDeck:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  text-decoration: none;
 }
 
 .no-deck {
@@ -257,18 +258,7 @@ button[style='display: none'] {
 
 /*-----------------------------------------------SHOW DECK--------------------------------------*/
 /* Réinitialisation des marges et paddings */
-* {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto';
-  box-sizing: border-box;
-}
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-}
 .showDeckContainer {
   width: 100%;
   display: flex;
@@ -540,8 +530,18 @@ body {
   transition: opacity 0.5s ease-in-out;
 }
 
-#playActions{
+#playActions {
   display: flex;
-  width: 15%;
+  width: 100%;
+  max-width: 28rem;
   gap: 10px;
+}
+
+#wrong {
+  background-color: rgb(177, 15, 15);
+  width: 50%;
+}
+#correct {
+  background-color: rgb(92, 151, 4);
+  width: 50%;
 }
