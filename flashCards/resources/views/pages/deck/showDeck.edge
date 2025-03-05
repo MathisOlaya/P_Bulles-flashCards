@@ -20,7 +20,10 @@
     </div>
     <div class="rightPart">
       {{--  Play  --}}
-      <a style="margin-bottom: 1rem; background-color: green" href="{{ route('deck.play', {id: deck.id_deck})}}">Réviser ! ▶️</a>
+      <a
+        style="margin-bottom: 1rem; background-color: green"
+        href="{{ route('game.select', {id: deck.id_deck}) }}"
+      >Réviser ! ▶️</a>
       <table>
         <thead>
           <tr>
