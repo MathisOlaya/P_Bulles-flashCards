@@ -44,6 +44,10 @@ router
   .as('game.select')
   .use(middleware.auth())
 router.get('/deck/:id/play', [DecksController, 'play']).as('game.play').use(middleware.auth())
+router
+  .get('/deck/:id/victory', [DecksController, 'victory'])
+  .as('game.victory')
+  .use(middleware.auth())
 
 router
   .on('/deck/create')
