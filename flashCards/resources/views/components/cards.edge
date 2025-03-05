@@ -3,14 +3,14 @@
   Carte <span id="currentCard">1</span>‎ sur <span id="cardCount"></span>
 </h4>
 <div data-card class="toggleCard">
-    <h3 id="toggleCardText">
-      {{--  Défini dans le JS  --}}
-    </h3>
-  </div>
-  <div id="playActions">
-    <button id="previous">Précédente</button>
-    <button id="next">Suivant</button>
-  </div>
+  <h3 style="text-align: center; padding: 0 5px" id="toggleCardText">
+    {{--  Défini dans le JS  --}}
+  </h3>
+</div>
+<div id="playActions">
+  <button id="wrong">Faux</button>
+  <button id="correct">Correct</button>
+</div>
 <script>
     const cards = JSON.parse(decodeHtml('{{ cards }}'))
 
