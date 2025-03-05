@@ -1,6 +1,7 @@
 @component('components/layout', {title: 'Réviser | QuizConst'})
-<h2>Révision du deck '{{deck.nom}}'</h2>
-@!component('components/cards', {cards: cards})
-<script>
-</script>
+  <h2>
+    Révision du deck '{{deck.nom}}'
+  </h2>
+  @!component('components/cards', {deck, cards: cards})
+  <a style="padding-top: 1rem" href="{{ route('deck.show', {id: deck.id_deck}) }}">Revenir</a>
 @endcomponent
