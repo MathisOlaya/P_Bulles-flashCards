@@ -6,11 +6,12 @@ import Card from '#models/card'
 
 // [Validator]
 import { createDeckValidator, updateDeckValidator } from '#validators/deck'
+import { request } from 'http'
 
 export default class DecksController {
   async index({ view, auth, request }: HttpContext) {
     // Get query parameter
-    const query = request.input('q');
+    const query = request.input('q')
 
     //get user
     const user = await auth.getUserOrFail()
@@ -19,7 +20,7 @@ export default class DecksController {
     let decks = await Deck.query().where('id_user', user.id_user)
     const deckCount = decks.length
     // If user specify QUERY.
-    if(query){
+    if (query) {
       decks = await Deck.query().where('id_user', user.id_user).andWhereILike('nom', `%${query}%`)
     }
 
@@ -135,22 +136,67 @@ export default class DecksController {
     return response.redirect().toRoute('home')
   }
 
-  async play({ view, request, auth }: HttpContext){
-    const id = request.param('id');
-    const user = await auth.getUserOrFail();
+  async selectGame({ view, request, auth }: HttpContext) {
+    const id = request.param('id')
+    const user = await auth.getUserOrFail()
 
-    const deck = await Deck.query()
-      .where('id_deck', id)
-      .andWhere('id_user', user.id_user)
-      .first()
+    const deck = await Deck.query().where('id_deck', id).andWhere('id_user', user.id_user).first()
 
     if (!deck) {
       return view.render('pages/errors/not_found')
     }
 
+    // How many cards has this deck ?
     const cards = await Card.query().where('id_deck', id)
-    console.log(JSON.parse(JSON.stringify(cards)))
+    const cardsCount = cards.length
 
-    return view.render('pages/game/game', {deck, cards: JSON.stringify(cards)})
+    return view.render('pages/game/gameselector', { deck, cardsCount })
+  }
+  async play({ view, request, auth }: HttpContext) {
+    // Get game mode
+    const { gamemode } = request.all()
+
+    // Deck ID
+    const id = request.param('id')
+
+    // User
+    const user = await auth.getUserOrFail()
+
+    // Get DECK
+    const deck = await Deck.query().where('id_deck', id).andWhere('id_user', user.id_user).first()
+
+    if (!deck) {
+      return view.render('pages/errors/not_found')
+    }
+
+    // Get cards
+    const cards = await Card.query().where('id_deck', id)
+
+    return view.render('pages/game/game', {
+      deck,
+      cards: JSON.stringify(
+        cards.map((card) => {
+          card.reponse = encodeURIComponent(card.reponse) // Encoder les réponses
+          return card
+        })
+      ),
+    })
+  }
+
+  async victory({ view, request, auth }: HttpContext) {
+    // Deck ID
+    const id = request.param('id')
+
+    // User
+    const user = await auth.getUserOrFail()
+
+    // Get DECK
+    const deck = await Deck.query().where('id_deck', id).andWhere('id_user', user.id_user).first()
+
+    if (!deck) {
+      return view.render('pages/errors/not_found')
+    }
+
+    return view.render('pages/game/victory', { deck })
   }
 }
