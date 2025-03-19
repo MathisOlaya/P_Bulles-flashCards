@@ -87,7 +87,7 @@ export default class CardsController {
     return view.render('pages/card/showCard', { card, deck })
   }
 
-  async deleteCard({ view, auth, request, response }: HttpContext) {
+  async deleteCard({ view, auth, request, response, session }: HttpContext) {
     // Get params
     const deckId = await request.param('id')
     const cardId = await request.param('cardId')
@@ -118,6 +118,8 @@ export default class CardsController {
 
     // If ok, delete
     await card.delete()
+
+    session.flash('success', 'La carte a été supprimée avec succès')
 
     return response.redirect().toRoute('deck.show', { id: deckId })
   }
@@ -154,7 +156,7 @@ export default class CardsController {
     return view.render('pages/card/updateCard', { deck, card })
   }
 
-  async updateCard({ view, auth, request, response }: HttpContext) {
+  async updateCard({ view, auth, request, response, session }: HttpContext) {
     //User
     const user = await auth.getUserOrFail()
 
@@ -191,6 +193,8 @@ export default class CardsController {
         reponse: reponse,
       })
       .save()
+
+    session.flash('success', 'Carte modifiée avec succès')
 
     return response.redirect().toRoute('card.show', { id: deckId, cardId: cardId })
   }

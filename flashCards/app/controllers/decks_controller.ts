@@ -75,7 +75,7 @@ export default class DecksController {
 
     return response.redirect().toRoute('home')
   }
-  async delete({ request, view, auth, response }: HttpContext) {
+  async delete({ request, view, auth, response, session }: HttpContext) {
     //id who will be delete
     const id = request.param('id')
     const user = await auth.getUserOrFail()
@@ -91,6 +91,8 @@ export default class DecksController {
     }
 
     await deckToDelete.delete()
+
+    session.flash('success', 'Deck supprimé avec succès')
 
     response.redirect().toRoute('home')
   }
@@ -110,7 +112,7 @@ export default class DecksController {
 
     return view.render('pages/deck/update', { deck })
   }
-  async update({ view, response, request, auth }: HttpContext) {
+  async update({ view, response, request, auth, session }: HttpContext) {
     const user = await auth.getUserOrFail()
 
     const { name, description } = await request.validateUsing(updateDeckValidator(user.id_user))
@@ -132,6 +134,8 @@ export default class DecksController {
         description: description,
       })
       .save()
+
+    session.flash('success', 'Deck modifié avec succès')
 
     return response.redirect().toRoute('home')
   }
