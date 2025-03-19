@@ -7,7 +7,7 @@
       <form>
         @!component('components/nonEditableInput', {name: 'name', label: 'Nom', value: deck.nom, })
         @!component('components/nonEditableTextarea', {name: 'name', label: 'Description', value: deck.description, })
-        @!component('components/nonEditableInput', {name: 'createdAt', label: 'Date de création', value:deck.created_at })
+        @!component('components/nonEditableInput', {name: 'createdAt', label: 'Date de création', value: dateTime })
       </form>
       <div class="updateContainer">
         <a id="updateDeck" href="{{ route('deck.update.show', {id: deck.id_deck}) }}">Modifier</a>

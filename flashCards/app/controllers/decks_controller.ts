@@ -6,7 +6,7 @@ import Card from '#models/card'
 
 // [Validator]
 import { createDeckValidator, updateDeckValidator } from '#validators/deck'
-import { request } from 'http'
+import { DateTime } from 'luxon'
 
 export default class DecksController {
   async index({ view, auth, request }: HttpContext) {
@@ -41,8 +41,8 @@ export default class DecksController {
     }
 
     //change date format
-    const date = new Date(deck.created_at)
-    deck.created_at = date.toLocaleString('fr-FR', {
+    const date = deck.created_at.toJSDate()
+    const dateTime = date.toLocaleString('fr-FR', {
       weekday: 'long', // Jour de la semaine complet
       year: 'numeric', // Année en format numérique
       month: 'long', // Mois complet
@@ -56,7 +56,7 @@ export default class DecksController {
     // Get all cards from deck
     const cards = await Card.query().where('id_deck', deckId)
 
-    return view.render('pages/deck/showDeck', { deck, cards })
+    return view.render('pages/deck/showDeck', { deck, cards, dateTime })
   }
   async create({ request, auth, response, session }: HttpContext) {
     //get user
