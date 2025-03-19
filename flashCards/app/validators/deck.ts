@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-const createDeckValidator = (userId) => {
+const createDeckValidator = (userId: number) => {
   return vine.compile(
     vine.object({
       name: vine.string().unique(async (db, value, field) => {
@@ -13,7 +13,7 @@ const createDeckValidator = (userId) => {
   )
 }
 
-const updateDeckValidator = (userId) => {
+const updateDeckValidator = (userId: number) => {
   return vine.compile(
     vine.object({
       name: vine.string().unique(async (db, value, field) => {

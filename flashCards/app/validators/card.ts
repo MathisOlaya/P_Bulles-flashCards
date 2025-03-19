@@ -1,13 +1,13 @@
 import vine from '@vinejs/vine'
 
-const createCardValidator = (deckId) => {
+const createCardValidator = (deckId: number) => {
   return vine.compile(
     vine.object({
       question: vine
         .string()
         .trim()
         .minLength(10)
-        .unique(async (db, value, field) => {
+        .unique(async (db, value) => {
           const user = await db
             .from('t_card')
             .where('question', value)
@@ -20,7 +20,7 @@ const createCardValidator = (deckId) => {
   )
 }
 
-const updateCardValidator = (deckId) =>
+const updateCardValidator = (deckId: number) =>
   vine.compile(
     vine.object({
       question: vine
