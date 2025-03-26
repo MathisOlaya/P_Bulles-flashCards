@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Deck from './deck.js'
 import { compose } from '@adonisjs/core/helpers'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
@@ -16,24 +17,24 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   // Colonnes autorisées pour l'assignation de masse
   @column({ isPrimary: true })
-  public id_user: number
+  declare id_user: number
 
   @column()
-  public username: string
+  declare username: string
 
   @column()
-  public password_hash: string
+  declare password_hash: string
 
   @column()
-  public isAdmin: boolean
+  declare isAdmin: boolean
 
   @column.dateTime({ autoCreate: true })
-  public created_at: DateTime
+  declare created_at: DateTime
 
   @column.dateTime({ autoUpdate: true })
-  public updated_at: DateTime
+  declare updated_at: DateTime
 
   // Relation avec le modèle Deck
   @hasMany(() => Deck)
-  public decks: HasMany<typeof Deck>
+  declare decks: HasMany<typeof Deck>
 }

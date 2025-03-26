@@ -28,7 +28,7 @@ export default class AuthController {
     return response.redirect().toRoute('home')
   }
   async register({ request, auth, response }: HttpContext) {
-    const { username, pwd, confirmPassword } = await request.validateUsing(registerUserValidator)
+    const { username, pwd } = await request.validateUsing(registerUserValidator)
 
     const user = await User.create({
       username: username,

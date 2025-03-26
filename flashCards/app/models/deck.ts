@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
 import Card from './card.js'
 
@@ -9,28 +10,28 @@ export default class Deck extends BaseModel {
 
   // Colonnes autorisées pour l'assignation de masse
   @column({ isPrimary: true })
-  public id_deck: number
+  declare id_deck: number
 
   @column()
-  public nom: string
+  declare nom: string
 
   @column()
-  public description: string
+  declare description: string
 
   @column()
-  public id_user: number
+  declare id_user: number
 
   @column.dateTime({ autoCreate: true })
-  public created_at: DateTime
+  declare created_at: DateTime
 
   @column.dateTime({ autoUpdate: true })
-  public updated_at: DateTime
+  declare updated_at: DateTime
 
   // Relation avec le modèle User
   @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   // Relation avec le modèle Card
   @hasMany(() => Card)
-  public cards: HasMany<typeof Card>
+  declare cards: HasMany<typeof Card>
 }
