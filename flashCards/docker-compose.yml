@@ -3,38 +3,6 @@ version: '2.1'
 name: flashcards
 
 services:
-  db:
-    image: mysql:8.0.30
-    container_name: db_passionlecture
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: db_user
-      MYSQL_PASSWORD: db_user_pass
-    restart: always
-    ports:
-      - '6033:3306'
-    volumes:
-      - dbdata:/var/lib/mysql
-    healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      interval: 10s
-      retries: 5
-      timeout: 5s
-
-  phpmyadmin:
-    image: phpmyadmin:5.2.0
-    container_name: pma_passionlecture
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    restart: always
-    ports:
-      - '8081:80'
-
   nodejs:
     build:
       context: .
@@ -50,14 +18,11 @@ services:
       - PORT=3333
       - SESSION_DRIVER=cookie
       - NODE_ENV=production
-      - DB_HOST=db
+      - DB_HOST=switchyard.proxy.rlwy.net
       - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_DATABASE=db
-      - DB_PORT=3306
-    depends_on:
-      db:
-        condition: service_healthy
+      - DB_PASSWORD=kTyQuNFnrtSAxbNUYMHyWNAIuqlxtTJF
+      - DB_DATABASE=railway
+      - DB_PORT=53315
     command: /bin/sh -c "node ace migration:run --force && node ./bin/server.js"
 
 volumes:
