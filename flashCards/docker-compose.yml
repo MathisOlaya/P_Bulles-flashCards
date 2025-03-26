@@ -24,6 +24,3 @@ services:
       - DB_DATABASE=railway
       - DB_PORT=53315
     command: /bin/sh -c "node ace migration:run --force && node ./bin/server.js"
-
-volumes:
-  dbdata:
