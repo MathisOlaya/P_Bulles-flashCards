@@ -74,4 +74,20 @@ Ci-dessous se trouvera donc une explication détaillé de chacun de ces 2 fichie
    
 
 ### 🚀 Plateforme
-En premier temps j'ai choisi une plateforme me permettant d'héberger à la fois le site et la base de données. J'ai choisi Railway qui propose un essai gratuit.
+En suite j'ai choisi une plateforme me permettant d'héberger à la fois le site et la base de données. J'ai choisi Railway qui propose un essai gratuit.
+
+### 📊 Hébergement de la base de données
+Pour cette étape, il suffit simplement d'ajouter un nouveau service MySQL, et d'y copier les variables d'environnement fournies par le service dans notre code. Puis importer les tables avec la commande : 
+   ```ace
+   node ace migration:run
+   ```
+
+✅ La base de données est maintenant accessible en ligne depuis notre application (même en local)
+
+### Hébergement de l'application
+Il reste maintenant à ajouter un service en spécifiant notre repos GitHub. Puis ajouter les variables d'environnement de notre application. Il faut également ajouté la variable *railway_dockerfile_path* qui permet de définir la position de notre fichier Dockerfile.
+   ```env
+   RAILWAY_DOCKERFILE_PATH="/path/to/your/dockerfile"
+   ```
+Et finir, en activant le nom de domaine.
+### 🎉 Notre application est maintenant dockerisée et disponible en ligne
