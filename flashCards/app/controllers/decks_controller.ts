@@ -6,8 +6,6 @@ import Card from '#models/card'
 
 // [Validator]
 import { createDeckValidator, updateDeckValidator } from '#validators/deck'
-import { DateTime } from 'luxon'
-
 export default class DecksController {
   async index({ view, auth, request }: HttpContext) {
     // Get query parameter
@@ -158,7 +156,7 @@ export default class DecksController {
   }
   async play({ view, request, auth }: HttpContext) {
     // Get game mode
-    const { gamemode } = request.all()
+    //const { gamemode } = request.all()
 
     // Deck ID
     const id = request.param('id')
