@@ -5,7 +5,7 @@ Pour déployer QuizConst, il a fallu suivre certaines étapes pour y parvenir.
 ### 📦 Dockerisation
 En premier temps, il est important de dockeriser toute son application. Cela permet d'empaqueter une application et toutes ses dépendances dans un conteneur, afin de pouvoir les déployer sur n'importe quel environnement. 
 
-📁 Pour ce faire, il est important d'utiliser 2 fichiers, le premier est *docker-compose.yml*. Celui-ci permet de définir et gérer les différents conteneurs. Et le second *Dockerfile*, celui-ci permet de crée une image Docker pour un seul service.
+📁 Pour ce faire, il est important d'utiliser 2 fichiers (localement), le premier est *docker-compose.yml*. Celui-ci permet de définir et gérer les différents conteneurs. A noter que celui-ci est utile uniquement lors du développement en local, lorsque nous déployerons le tout en ligne, celui-ci ne sera pas utilisé. Et le second *Dockerfile*, celui-ci permet de crée une image Docker pour un seul service.
 Ci-dessous se trouvera donc une explication détaillé de chacun de ces 2 fichiers.
 
 1) Docker-compose.yml
