@@ -91,3 +91,64 @@ Il reste maintenant à ajouter un service en spécifiant notre repos GitHub. Pui
    ```
 Et finir, en activant le nom de domaine.
 ### 🎉 Notre application est maintenant dockerisée et disponible en ligne
+
+## Déploiement de l'application sur un serveur distant
+ 
+### 1. Transférer l'application sur le serveur distant
+```bash
+scp -r -P 222 <nom-dossier/fichier> <utilisateur>@<nom-domaine>:~/<chemin-depuis-la-racine>
+```
+-   `scp`: Outil pour copier des fichiers entre 2 machines distantes
+-   `-r`: Copie même les sous-fichiers
+-   `-P`: `222` Spécifie le port du serveur
+-   `<nom-dossier/fichier>`: Nom du dossier que l'on veut copier
+-   `<utilisateur>@<nom-domaine>`: Nom d'utilisateur et domaine pour se connecter a la machine distante
+-   `~`: Symbole qui indique que c'est la racine
+-   `<chemin-depuis-la-racine>`: Chemin ou l'on veut transférer les fichiers
+ 
+### 2. Se connecter au serveur distant
+```bash
+ssh -p 222<utilisateur>@<nom-domaine>
+```
+ 
+-   `ssh`: Outil pour se connecter à une machine distante
+-   `-p`: `222` Spécifie le port du serveur
+-   `<utilisateur>@<nom-domaine>`: Nom d'utilisateur et domaine pour se connecter a la machine distante
+- Mettre le mot de passe
+
+### 3. Construire l'application
+```bash
+node ace build
+```
+
+### 4. Modifier les variables d'environnements
+```bash
+cp .env /build/.env
+```
+
+-   `cp`: Outil permettant de copier
+-   `.env`: Fichier que nous souhaitons copier
+-   `/build/.env`: Destination de la copie
+
+#### Optionnel : Modifier les variables 
+```bash
+nano /build/.env
+```
+-   `nano`: Editeur de texte
+-   `build/.env`: Fichier à modifier
+
+### 5. Installer pm2
+```bash
+npm install pm2@latest -g
+```
+
+-   `npm`: Gestionnaire de packages
+-   `install`: Installeur de packages
+-   `pm2`: Packet à installer
+-   `@latest`: Préciser la version la plus récente
+-   `-g`: Installer le module globalement dans npm
+
+### 6. Lancer
+```bash
+pm2 start build/server.js --name flashcards
+```
