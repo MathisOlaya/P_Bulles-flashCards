@@ -210,6 +210,7 @@ cp .env build/.env
 -   `/build/.env`: Destination de la copie
 
 #### Optionnel : Modifier les variables 
+
 ```bash
 nano build/.env
 ```
@@ -218,6 +219,14 @@ nano build/.env
 
 ### 5. Installer les dépendances
 Se rendre dans le dossier de build 
+⚠️ N'oubliez pas d'ajouter les bonnes valeurs pour la base de donnée
+
+Puis migrer les tables de la base de données avec 
+```bash
+node ace migration:run
+```
+
+Puis 
 
 ```bash
 cd build/
