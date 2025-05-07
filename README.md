@@ -166,7 +166,14 @@ scp -r -P 222 <"./nom-dossier"> <utilisateur>@<nom-domaine>:~/<chemin-depuis-la-
 -   `<utilisateur>@<nom-domaine>`: Nom d'utilisateur et domaine pour se connecter a la machine distante
 -   `~`: Symbole qui indique que c'est la racine
 -   `<chemin-depuis-la-racine>`: Chemin ou l'on veut transférer les fichiers
- 
+
+Pour ma part : 
+```bash
+scp -r -P 222 "./" mathis@mid2a-mathis.w3.pm2etml.ch:~/my-app
+```
+📍 Je me suis mis dans mon dossier contenant tout le code, d'ou le `./`
+📁Le dossier `my-app` sera créer tout seul, pas d'inquiétude
+
 ### 2. Se connecter au serveur distant
 ```bash
 ssh -p 222 <utilisateur>@<nom-domaine>
@@ -176,6 +183,8 @@ ssh -p 222 <utilisateur>@<nom-domaine>
 -   `-p`: `222` Spécifie le port du serveur
 -   `<utilisateur>@<nom-domaine>`: Nom d'utilisateur et domaine pour se connecter a la machine distante
 - Mettre le mot de passe
+
+Vous pouvez vérifier avec la commande `ls` que votre dossier est bien présent. 
 
 ### 3. Construire l'application
 ```bash
