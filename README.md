@@ -26,17 +26,17 @@ Ci-dessous se trouvera donc une explication détaillé de chacun de ces 2 fichie
          - '3333:3333' # Ici 3333 & 3333
        restart: always # Permet de redémarre automatiquement si le cotneneur se termine. Cela permet d'avoir un conteneur toujours actif
        environment: # Définir chaque variables d'environnement nécessaire au bon fonctionnement de l'application
-         - HOST=0.0.0.0
+         - HOST=<host>
          - LOG_LEVEL=info
-         - APP_KEY=KKOPY4l340863b43R3E2w6jKxQY-jS2o
-         - PORT=3333
+         - APP_KEY=<your-app-key>
+         - PORT=<port>
          - SESSION_DRIVER=cookie
          - NODE_ENV=production
-         - DB_HOST=switchyard.proxy.rlwy.net
-         - DB_USER=root
-         - DB_PASSWORD=kTyQuNFnrtSAxbNUYMHyWNAIuqlxtTJF
-         - DB_DATABASE=railway
-         - DB_PORT=53315
+         - DB_HOST=<database-host>
+         - DB_USER=<database-username>
+         - DB_PASSWORD=<database-password>
+         - DB_DATABASE=<database>
+         - DB_PORT=<database-port>
        command: /bin/sh -c "node ace migration:run --force && node ./bin/server.js" # Commande s'exécutant au démarrage du conteneur (effectzer les migrations et lancer le serveur.)
    ```
 2) adonis.dockerfile
