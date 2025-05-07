@@ -187,13 +187,22 @@ ssh -p 222 <utilisateur>@<nom-domaine>
 Vous pouvez vérifier avec la commande `ls` que votre dossier est bien présent. 
 
 ### 3. Construire l'application
+Il est temps de construire l'application, pour ce faire rendez-vous dans le répertoire contenant votre code avec la commande : `cd my-app`
+
+⚠️ Si vous aviez supprimer le dossier node_modules, ré-installer le maintenant avec la commande : 
+```bash
+npm i
+```
+
+Puis
+
 ```bash
 node ace build
 ```
 
 ### 4. Modifier les variables d'environnements
 ```bash
-cp .env /build/.env
+cp .env build/.env
 ```
 
 -   `cp`: Outil permettant de copier
@@ -207,7 +216,19 @@ nano /build/.env
 -   `nano`: Editeur de texte
 -   `build/.env`: Fichier à modifier
 
-### 5. Installer pm2
+### 5. Installer les dépendances
+Se rendre dans le dossier de build 
+
+```bash
+cd build/
+```
+Puis installer les dépendances uniquement nécessaires à la production avec la commande : 
+
+```bash
+npm ci --omit="dev"
+```
+
+### 6. Installer pm2
 ```bash
 npm install pm2@latest -g
 ```
