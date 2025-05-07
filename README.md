@@ -62,7 +62,7 @@ Ci-dessous se trouvera donc une explication détaillé de chacun de ces 2 fichie
    FROM base AS production-deps # Redéfintion de base en 'production-deps'
    WORKDIR /app # Redéfinit le répertoire de travail à /app
    ADD package.json package-lock.json ./ # Ajouter les fichiers package*.json au répertoire du conteneur
-   RUN npm ci --omit=dev # Installer les dépendances nécessaires en exclusant les dépendances de développement (❌--save-dev)
+   RUN npm ci --omit=dev # Installer les dépendances nécessaires en exclusant les dépendances de développement
    
    # Build stage (Commentaire indiquant que la prochaine étape est dédiée à la construction de l'application)
    FROM base AS build # Redéfinition de base en 'build'
@@ -83,23 +83,83 @@ Ci-dessous se trouvera donc une explication détaillé de chacun de ces 2 fichie
    
 
 ### 🚀 Plateforme
-En suite j'ai choisi une plateforme me permettant d'héberger à la fois le site et la base de données. J'ai choisi Railway qui propose un essai gratuit.
+En suite j'ai choisi une plateforme me permettant d'héberger à la fois le site et la base de données. J'ai choisi Railway qui propose un essai gratuit. Il faut donc créer un compte, et y ajouter un nouveau projet <a href="railway.com/dashboard">(voir ici)<a/>
+
+### 📥 Ajouter le repos
+En suite, connectez votre comptre GitHub pour sélectionner le repos souhaité. Pour ma part "MathisOlaya/P_Bulles-flashCards". Attendez un instant le temps que railway copie le repos.
+
+### ⚠️ Important : Référencez le dockerfile / projet
+Railway a maintenant besoin du dockerfile créer précédemment, si celui-ci se trouve à la racine de votre repos alors tout est bon. Cependant, pour ma part il se trouve dans un sous-dossier, sinon il faut le référencer. Pour ce faire, aller dans `Variables` et cliquer sur `New Variable` pour en ajouter une.  Et initialiser la ainsi :
+
+```js
+VARIABLE_NAME: RAILWAY_DOCKERFILE_PATH
+VALUE or ${{REF}}: *votre_chemin_daccess_depuis_la_racine* // Par exemple : /flashCards/adonis.dockerfile
+```
+
+De même pour le dossier contenant le code, pour le référencer, allez dans `Settings`, puis `Add Root Directory` et ajouter y le dossier souhaité. 
+Pour ma part `/flashcards`
+
+### 🔐 Ajouter les variables d'environnents
+Pour que notre application fonctionne correctement, elle a besoin d'utiliser certaines variables d'environnements. Pour ce faire, rendez-vous à nouveau dans `Variables`. Il va falloir définir une série de variables, pour ce faire je vous 
+conseille d'utiliser le `Raw Editor` en mode `ENV`. Voici la liste exhaustive à définir pour ce projet (⚠️ Cette liste peut changée en fonction du projet)
+
+La première variable est APP_KEY, pour la générer, ouvrez un CMD et exécuter : 
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+🖍️ Copier la valeur retournée et collez la ci-dessous :
+
+```env
+APP_KEY="copier_la_valeur_ici"
+HOST=0.0.0.0 (localhost)
+LOG_LEVEL=info
+SESSION_DRIVER=cookie
+```
+
+⚠️ Il manque encore certaines variables, mais pour les obtenir il est nécessaire de déployer la base de données, voici comment faire.
 
 ### 📊 Hébergement de la base de données
-Pour cette étape, il suffit simplement d'ajouter un nouveau service MySQL, et d'y copier les variables d'environnement fournies par le service dans notre code. Puis importer les tables avec la commande : 
-   ```ace
-   node ace migration:run
-   ```
+Il faut maintenant déployer la base de données pour la rendre accessible depuis n'importe où.
+Pour ce faire, retournez sur `Railway`, et ajouter un nouveau service (*clique droit dans le fond*) et sélectionnez `Database`. Puis sélectionner `MySQL`. Attendez le temps que Railway initialisent la base de données. Une fois la base de données créée, rendez-vous dans l'onglet `Variables`, vous trouverez les variables nécessaires pour notre application. Enregistrer quelque part les variables présentent ci-dessous : 
 
-✅ La base de données est maintenant accessible en ligne depuis notre application (même en local)
+```env
+MYSQLUSER
+MYSQLPASSWORD
+MYSQLDATABASE
+```
 
-### Hébergement de l'application
-Il reste maintenant à ajouter un service en spécifiant notre repos GitHub. Puis ajouter les variables d'environnement de notre application. Il faut également ajouté la variable *railway_dockerfile_path* qui permet de définir la position de notre fichier Dockerfile.
-   ```env
-   RAILWAY_DOCKERFILE_PATH="/path/to/your/dockerfile"
-   ```
-Et finir, en activant le nom de domaine.
-### 🎉 Notre application est maintenant dockerisée et disponible en ligne
+Et également la variable host et port, pour ce faire, cliquez sur `X Railway Provided Variables available` et copier les variables nommées : `RAILWAY_TCP_PROXY_PORT` & `RAILWAY_TCP_PROXY_PORT`
+
+Maintenant, il faut référencer ces variables à notre application comme précédemment, retournez sur le service contenant notre application (pas MySQL !) -> Variables -> Raw Editor. Et ajoutez les variables que vous venez de copier de cette manière : 
+
+```env
+DB_HOST="votre_hote" # Variable nommée RAILWAY_TCP_PROXY_PORT
+DB_PORT="votre_port" # Variable nommée MYSQLPORT
+DB_USER="votre_user" # Variable nommée MYSQLUSER
+DB_PASSWORD="votre_mot_de_passe" # Variable nommée MYSQLPASSWORD
+DB_DATABASE="votre_base_de_donnees" 3 Variable nommée MYSQLDATABASE
+```
+
+Dernière étape, notre base de données est vide pour le moment. Il est important d'importer les tables nécessaires au bon fonctionnement de l'application. Il est uniquement possible de faire cela depuis votre PC, donc assurez vous d'avoir le repos en local et d'y avoir installer les dépendances (`npm i`). Ouvrez le dossier contenant votre projet, en l'occurence AdonisJS. Ouvrez le fichier `.env` et copier y toutes les variables qu'on vient de définir dans Railway, ajoutez également ces variables : 
+
+```env
+PORT=3000
+NODE_ENV=production
+```
+*Avant d'exécuter la commande, assurez vous que le service MySQL est prêt, pour savoir, ouvrez-le et rendez-vous dans l'onglet `Data`. Vous pourrez voir ici si le service est prêt.*
+Ouvrez ensuite un CMD et exécuter la commande :
+
+```ace
+node ace migration:run
+```
+
+✅ La base de données est maintenant accessible en ligne et contient toutes les tables nécessaires.
+
+### 🏁 Déployer
+Vous pouvez maintenant déployer vos applications en ligne. Vous pouvez maintenant vous rendre sur votre site grâce à l'url publique, pour le trouver/créer, ouvrez votre service contenant votre application, rendez-vous dans `Settings`. Descendez jusqu'à `Networking` et cliquez sur `Generate Custom Domain`. Une adresse se créera. Pour ma part : 
+
+<a href="pbulles-flashcards-production-c623.up.railway.app">pbulles-flashcards-production-c623.up.railway.app</a> Non fonctionnel
 
 ## Déploiement de l'application sur un serveur distant
  
