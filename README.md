@@ -1,4 +1,13 @@
-# P_Bulles-flashCards
+# P_Bulles-flashCards | QuizConst 📖
+## 🔧 Technologies utilisées 
+![AdonisJS](https://img.shields.io/badge/AdonisJS-5E2B97?style=for-the-badge&logo=adonisjs&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Railway](https://img.shields.io/badge/Railway-000000?style=for-the-badge&logo=railway&logoColor=white)
+
 ## 🐳 Déploiement avec Docker 
 Pour déployer QuizConst, il a fallu suivre certaines étapes pour y parvenir. 
 
