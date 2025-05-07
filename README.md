@@ -211,7 +211,7 @@ cp .env build/.env
 
 #### Optionnel : Modifier les variables 
 ```bash
-nano /build/.env
+nano build/.env
 ```
 -   `nano`: Editeur de texte
 -   `build/.env`: Fichier à modifier
@@ -241,5 +241,5 @@ npm install pm2@latest -g
 
 ### 6. Lancer
 ```bash
-pm2 start build/server.js --name flashcards
+pm2 start bin/server.js --name flashcards
 ```
