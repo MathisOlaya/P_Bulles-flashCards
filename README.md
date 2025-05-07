@@ -153,20 +153,23 @@ Vous pouvez maintenant déployer vos applications en ligne. Vous pouvez maintena
 ## Déploiement de l'application sur un serveur distant
  
 ### 1. Transférer l'application sur le serveur distant
+Avant toute chose, supprimer le dossier `node_modules` de votre répertoire contenant le projet, cela facilitera le transfert. Il ne faudra toute fois pas oublier de le retélécharger par la suite.
+
+Conseil : Ouvrez un BASH à la racine de votre projet, ou un niveau au dessus pour simplifier l'écriture de la commande ci-dessous.
 ```bash
-scp -r -P 222 <nom-dossier/fichier> <utilisateur>@<nom-domaine>:~/<chemin-depuis-la-racine>
+scp -r -P 222 <"./nom-dossier"> <utilisateur>@<nom-domaine>:~/<chemin-depuis-la-racine>
 ```
 -   `scp`: Outil pour copier des fichiers entre 2 machines distantes
 -   `-r`: Copie même les sous-fichiers
 -   `-P`: `222` Spécifie le port du serveur
--   `<nom-dossier/fichier>`: Nom du dossier que l'on veut copier
+-   `<nom-dossier>`: Nom du dossier que l'on veut copier ⚠️ Il est important d'entourer le chemin par des guillemets et de le précéder par un `./`, sinon tous les fichiers pourraient ne pas être transférés. 
 -   `<utilisateur>@<nom-domaine>`: Nom d'utilisateur et domaine pour se connecter a la machine distante
 -   `~`: Symbole qui indique que c'est la racine
 -   `<chemin-depuis-la-racine>`: Chemin ou l'on veut transférer les fichiers
  
 ### 2. Se connecter au serveur distant
 ```bash
-ssh -p 222<utilisateur>@<nom-domaine>
+ssh -p 222 <utilisateur>@<nom-domaine>
 ```
  
 -   `ssh`: Outil pour se connecter à une machine distante
