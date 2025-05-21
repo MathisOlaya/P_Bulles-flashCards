@@ -248,7 +248,19 @@ npm install pm2@latest -g
 -   `@latest`: Préciser la version la plus récente
 -   `-g`: Installer le module globalement dans npm
 
-### 6. Lancer
+### 7. Lancer
 ```bash
 pm2 start bin/server.js --name flashcards
 ```
+
+## Mes difficultés 🧐
+Durant ces deux déployements, j'ai dû faire face à plusieurs problèmes qui m'ont ralenti.
+
+1) Erreur TypeScript (Railway)
+     - Lorsque j'essayais de déployer, des erreurs typescript interrompaient le déployement alors que durant le développement, il ne se passait rien. J'ai donc dû tout corriger (Erreur de typage, etc.).
+  
+2) Référencement du DockerFile (Railway)
+     - Mon dockerfile ne se trouve pas à la racine du repos, railway avait donc du mal à le trouvé et cela me générait une erreur. J'ai donc du le référencer dans les variables d'environnements de railway.
+  
+3) DockerCompose (Railway)
+     - J'ai pendant un long moment pensé que le Dockercompose s'exécutait lors du déployement, or uniquement le Dockerfile est utilisé.
